@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": ".",
+            "name": "API"
+        },
+        {
+            "path": "docs", // Exclude the "docs" folder
+            "name": "Swagger Documentation"
+        }
+    ],
+    "settings": {
+        "go.inferGopath": false,
+        "go.useLanguageServer": true
+    }
+}

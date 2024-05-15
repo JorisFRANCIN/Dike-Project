@@ -1,0 +1,307 @@
+definitions:
+  models.Cron:
+    properties:
+      day:
+        type: string
+      hours:
+        type: string
+      minutes:
+        type: string
+      week:
+        type: string
+    type: object
+  models.Notify:
+    properties:
+      title:
+        type: string
+    type: object
+  models.Service:
+    properties:
+      backgroundColor:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+  models.ServiceAccessToken:
+    properties:
+      access_token:
+        type: string
+      expires_at:
+        type: string
+      refresh_token:
+        type: string
+      service_name:
+        type: string
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      refresh_token:
+        type: string
+      services:
+        items:
+          $ref: '#/definitions/models.ServiceAccessToken'
+        type: array
+      token:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.UserRegister:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /about.json:
+    get:
+      consumes:
+      - application/json
+      description: Get details of the services available as well as their actions
+        and reactions.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Services details, host IP address and current time in the Epoch
+            Unix Time Stamp format
+        "400":
+          description: Bad request or validation error
+        "500":
+          description: Internal server error
+      summary: Get services details
+  /services/{name}:
+    get:
+      consumes:
+      - application/json
+      description: Get details of a specific service based on the service's name.
+      parameters:
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Service details
+          schema:
+            $ref: '#/definitions/models.Service'
+        "400":
+          description: Bad request or validation error
+        "500":
+          description: Internal server error
+      summary: Get service details
+      tags:
+      - Services
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of users based on specified parameters.
+      parameters:
+      - description: Number of records per page
+        in: query
+        name: recordPerPage
+        type: integer
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Start index
+        in: query
+        name: startIndex
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+        "400":
+          description: Bad request or validation error
+        "500":
+          description: Internal server error
+      security:
+      - API_Token: []
+      summary: Get a list of users
+      tags:
+      - Users
+  /users/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get details of a specific user based on the user ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User details
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad request or validation error
+        "500":
+          description: Internal server error
+      security:
+      - API_Token: []
+      summary: Get user details
+      tags:
+      - Users
+  /users/Cron:
+    post:
+      consumes:
+      - application/json
+      description: Create the Cron action
+      parameters:
+      - description: Cron informations
+        in: body
+        name: cron
+        required: true
+        schema:
+          $ref: '#/definitions/models.Cron'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully registered user
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal server error
+      security:
+      - API_Token: []
+      summary: Cron inputs
+      tags:
+      - Services
+  /users/Notify:
+    post:
+      consumes:
+      - application/json
+      description: Create the Notify Reaction
+      parameters:
+      - description: Notify informations
+        in: body
+        name: notify
+        required: true
+        schema:
+          $ref: '#/definitions/models.Notify'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully registered user
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal server error
+      security:
+      - API_Token: []
+      summary: Notify inputs
+      tags:
+      - Services
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Log in a user with the provided email and password.
+      parameters:
+      - description: User login information
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully logged in
+        "400":
+          description: Bad request, invalid credentials
+        "500":
+          description: Internal server error
+      summary: Log in a user
+      tags:
+      - Users
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with the provided information.
+      parameters:
+      - description: User information to register
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRegister'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully registered user
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal server error
+      summary: Register a new user
+      tags:
+      - Users
+securityDefinitions:
+  API_Token:
+    description: Insert your JWT token
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,473 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "paths": {
+        "/about.json": {
+            "get": {
+                "description": "Get details of the services available as well as their actions and reactions.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get services details",
+                "responses": {
+                    "200": {
+                        "description": "Services details, host IP address and current time in the Epoch Unix Time Stamp format"
+                    },
+                    "400": {
+                        "description": "Bad request or validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/services/{name}": {
+            "get": {
+                "description": "Get details of a specific service based on the service's name.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get service details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service details",
+                        "schema": {
+                            "$ref": "#/definitions/models.Service"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request or validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "security": [
+                    {
+                        "API_Token": []
+                    }
+                ],
+                "description": "Get a list of users based on specified parameters.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a list of users",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of records per page",
+                        "name": "recordPerPage",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Start index",
+                        "name": "startIndex",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of users"
+                    },
+                    "400": {
+                        "description": "Bad request or validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/Cron": {
+            "post": {
+                "security": [
+                    {
+                        "API_Token": []
+                    }
+                ],
+                "description": "Create the Cron action",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Cron inputs",
+                "parameters": [
+                    {
+                        "description": "Cron informations",
+                        "name": "cron",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Cron"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully registered user"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/Notify": {
+            "post": {
+                "security": [
+                    {
+                        "API_Token": []
+                    }
+                ],
+                "description": "Create the Notify Reaction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Notify inputs",
+                "parameters": [
+                    {
+                        "description": "Notify informations",
+                        "name": "notify",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Notify"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully registered user"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "description": "Log in a user with the provided email and password.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Log in a user",
+                "parameters": [
+                    {
+                        "description": "User login information",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged in"
+                    },
+                    "400": {
+                        "description": "Bad request, invalid credentials"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/register": {
+            "post": {
+                "description": "Register a new user with the provided information.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "description": "User information to register",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserRegister"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully registered user"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "security": [
+                    {
+                        "API_Token": []
+                    }
+                ],
+                "description": "Get details of a specific user based on the user ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request or validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Cron": {
+            "type": "object",
+            "properties": {
+                "day": {
+                    "type": "string"
+                },
+                "hours": {
+                    "type": "string"
+                },
+                "minutes": {
+                    "type": "string"
+                },
+                "week": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Notify": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Service": {
+            "type": "object",
+            "properties": {
+                "backgroundColor": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceAccessToken": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "expires_at": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "service_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ServiceAccessToken"
+                    }
+                },
+                "token": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UserLogin": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                }
+            }
+        },
+        "models.UserRegister": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "API_Token": {
+            "description": "Insert your JWT token",
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
+        }
+    }
+}

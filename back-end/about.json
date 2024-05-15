@@ -1,0 +1,56 @@
+{
+  "client": {
+    "host": "::1"
+  },
+  "server": {
+    "current_time": 1715603587,
+    "services": [
+      {
+        "backgroundColor": "#2FB14C",
+        "description": "Email : Send and receive important information when you need it, automatically, with this service. The 'send me an email' action has a daily limit of 750 messages per day, at which point Applets will be paused until the limit resets at 12:00 AM GMT.",
+        "name": "Google"
+      },
+      {
+        "backgroundColor": "#FF0000",
+        "description": "YouTube is a video-sharing website on which users can upload, share, and view videos. Use Applets to manage your liked videos, get notified about new uploads from your subscriptions, and grow your YouTube subscribers by automatically letting the world know when you post something new to your channel.",
+        "name": "Youtube"
+      },
+      {
+        "backgroundColor": "#5D6BF2",
+        "name": "Discord"
+      },
+      {
+        "backgroundColor": "#611F69",
+        "description": "Slack brings all your team communication into one place. Turn on Applets to bring important information into channels, quickly share photos, automate reminders, and much more.",
+        "name": "Slack"
+      },
+      {
+        "backgroundColor": "#01A1F7",
+        "description": "Twitter Applets can help you manage and save tweets, keep an eye on #hashtags, and much more.",
+        "name": "Twitter"
+      },
+      {
+        "backgroundColor": "#000000",
+        "name": "Horloge"
+      },
+      {
+        "backgroundColor": "#2FB14C",
+        "name": "Météo"
+      },
+      {
+        "backgroundColor": "#0066C8",
+        "description": "LinkedIn is a business-oriented social networking site. Turn on Applets to share the best content, automatically, with your professional network on LinkedIn.",
+        "name": "Linkedin"
+      },
+      {
+        "backgroundColor": "#E1306C",
+        "name": "Insta"
+      },
+      {
+        "backgroundColor": "#000000",
+        "description": "GitHub is the best place to share code with friends, co-workers, classmates, and complete strangers. Turn on Applets to automatically track issues, pull requests, repositories, and to quickly create issues. ",
+        "name": "GitHub"
+      }
+    ]
+  }
+}
